@@ -19,24 +19,25 @@
   // Note: remember to fix the URL below.
   /////////////////////////////////////////////////////////////////////
 
-  const ajaxFileUplaod = (file) => {
+  const ajaxFileUpload = (file) => {
     var formData = new FormData();
     formData.append('file', file);
     $.ajax({
       type: 'POST',
       data: formData,
-      url: 'FILL_ME_IN',
+      url: serverUrl,
       cache: false,
       contentType: false,
       processData: false,
-      success: () => {
+      success: (url) => {
+        document.getElementsByClassName('background').style.backgroundImage = url(url);
         // reload the page
         window.location = window.location.href;
       }
     });
   };
 
-  setInterval(getCommand,500);
+  // setInterval(getCommand,500);
 
   $('form').on('submit', function(e) {
     e.preventDefault();
@@ -53,7 +54,7 @@
       return;
     }
 
-    ajaxFileUplaod(file);
+    ajaxFileUpload(file);
   });
 
 })();
