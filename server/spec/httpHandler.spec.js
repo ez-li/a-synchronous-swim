@@ -23,6 +23,8 @@ describe('server responses', () => {
 
   it('should respond to a GET request for a swim command', (done) => {
     // write your test here
+    let serverResponse = getCommand();
+    expect(serverResponse).to.equal('Serving request type GET for url');
     done();
   });
 

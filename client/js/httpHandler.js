@@ -6,6 +6,14 @@
   // TODO: build the swim command fetcher here
   //
 
+  // Get request
+  // pull data from the server
+  //
+
+  const getCommand = () => {
+    $.get(serverUrl, (data) => {SwimTeam.move(data)});
+  };
+
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
   // Note: remember to fix the URL below.
@@ -28,9 +36,11 @@
     });
   };
 
+  setInterval(getCommand,500);
+
   $('form').on('submit', function(e) {
     e.preventDefault();
-
+    getCommand();
     var form = $('form .file')[0];
     if (form.files.length === 0) {
       console.log('No file selected!');
