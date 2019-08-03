@@ -15,22 +15,8 @@
   };
 
   const getBackground = () => {
-    $.get(serverUrl+'/background.jpg', (data) => {console.log(data)});
+    $.get(serverUrl+'/background.jpg');
   };
-
-  // const getBackground= () => {
-  //   $.ajax({
-  //     url: serverUrl,
-  //       type: "GET",
-  //       // dataType:"image/jpg",
-  //       success: function(data) {
-  //         console.log(data);
-  //         /* alert(data); */
-  //           // $("#imgalign").html('<img src="' + data + '" />');
-  //     }
-  //   });
-  //   // $.get(serverUrl, (data) => {console.log(data)});
-  // };
 
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
@@ -55,8 +41,8 @@
     });
   };
 
-  // setInterval(getCommand,500);
-  setInterval(getBackground,500);
+  setInterval(getCommand,500);
+  getBackground();
 
   $('form').on('submit', function(e) {
     e.preventDefault();

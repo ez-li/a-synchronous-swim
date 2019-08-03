@@ -17,37 +17,33 @@ module.exports.initialize = (queue) => {
 
 module.exports.router = (req, res, next = messages.dequeue) => {
   // req.url = 'http://http://127.0.0.1:8080/';
-  console.log('Serving request type ' + req.method + ' for url ' + req.url);
-  // console.log(req);
+  // console.log('Serving request type ' + req.method + ' for url ' + req.url);
+  if (req.url.includes('jpg')) {
+    fs.readFile(module.exports.backgroundImageFile, function (err, content) {
+      if (err || content === undefined) {
+        res.writeHead(404, headers);
+        res.end();
+      } else {
+        res.writeHead(200, headers);
+        res.end(content);
+      }
+    });
+  } else if (req.method === 'GET') {
+    res.writeHead(200, headers);
+    res.end(messageQueue[0]);
+  } else {
+    res.writeHead(200, headers);
+    res.end();
+  }
 
-  // if (req.method === 'GET') {
-  //   res.writeHead(200, headers);
-  //   res.end(messageQueue[0]);
-  // }
+
   // if (req.method === 'POST') {
   //   res.writeHead(200, headers);
   //   console.log(res);
   //   // store the image
   //   res.end();
   // }
-  contents = fs.readFileSync(module.exports.backgroundImageFile);
-  res.end(contents);
 
-  // fs.readFile(module.exports.backgroundImageFile, function (err, content) {
-  //   // if (err) {
-  //   //   res.writeHead(400, {'Content-type':'text/html'})
-  //   //   console.log(err);
-  //   //   res.end("No such image");
-  //   // } else {
-  //     //specify the content type in the response will be an image
-  //   // res.header("Access-Control-Allow-Origin", "*");
-  //   // res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  //   //{'Content-type':'image/jpg'}
-  //   res.writeHead(200, headers);
-  //   console.log('fs.readFile', content);
-  //   res.end(content);
-  // // }
-  // });
 
   //if type = post
   //if file not there then res.writeHead(404)
