@@ -14,6 +14,24 @@
     $.get(serverUrl, (data) => {SwimTeam.move(data)});
   };
 
+  const getBackground = () => {
+    $.get(serverUrl+'/background.jpg', (data) => {console.log(data)});
+  };
+
+  // const getBackground= () => {
+  //   $.ajax({
+  //     url: serverUrl,
+  //       type: "GET",
+  //       // dataType:"image/jpg",
+  //       success: function(data) {
+  //         console.log(data);
+  //         /* alert(data); */
+  //           // $("#imgalign").html('<img src="' + data + '" />');
+  //     }
+  //   });
+  //   // $.get(serverUrl, (data) => {console.log(data)});
+  // };
+
   /////////////////////////////////////////////////////////////////////
   // The ajax file uplaoder is provided for your convenience!
   // Note: remember to fix the URL below.
@@ -38,10 +56,11 @@
   };
 
   // setInterval(getCommand,500);
+  setInterval(getBackground,500);
 
   $('form').on('submit', function(e) {
     e.preventDefault();
-    getCommand();
+    // getCommand();
     var form = $('form .file')[0];
     if (form.files.length === 0) {
       console.log('No file selected!');
