@@ -18,7 +18,7 @@ module.exports.initialize = (queue) => {
 module.exports.router = (req, res, next = messages.dequeue) => {
   // req.url = 'http://http://127.0.0.1:8080/';
   // console.log('Serving request type ' + req.method + ' for url ' + req.url);
-  if (req.url.includes('jpg')) {
+  if (req.method === 'GET' && req.url.includes('jpg')) {
     fs.readFile(module.exports.backgroundImageFile, function (err, content) {
       if (err || content === undefined) {
         res.writeHead(404, headers);
@@ -31,24 +31,23 @@ module.exports.router = (req, res, next = messages.dequeue) => {
   } else if (req.method === 'GET') {
     res.writeHead(200, headers);
     res.end(messageQueue[0]);
+  } else if (req.method === 'POST' && req.url.includes('jpg')) {
+    res.writeHead(201, headers);
+    var fileData = new Buffer('');
+    req.on('data',(chunk) => {
+      fileData = Buffer.concat([fileData, chunk]);
+    });
+    req.on('end', () => {
+      var file = multipart.getFile(fileData);
+      fs.writeFile(module.exports.backgroundImageFile, file.data, (err) => {
+        if (err) throw err;
+      })
+      res.end();
+    })
   } else {
     res.writeHead(200, headers);
     res.end();
   }
-
-
-  // if (req.method === 'POST') {
-  //   res.writeHead(200, headers);
-  //   console.log(res);
-  //   // store the image
-  //   res.end();
-  // }
-
-
-  //if type = post
-  //if file not there then res.writeHead(404)
-  //if file is there then
-
 
   next(); // invoke next() at the end of a request to help with testing!
 };

@@ -33,20 +33,20 @@
       cache: false,
       contentType: false,
       processData: false,
-      success: (url) => {
-        document.getElementsByClassName('background').style.backgroundImage = url(url);
-        // reload the page
+      success: () => {
         window.location = window.location.href;
+      },
+      error: () => {
+        console.log('error');
       }
     });
   };
 
   setInterval(getCommand,500);
-  getBackground();
 
   $('form').on('submit', function(e) {
     e.preventDefault();
-    // getCommand();
+
     var form = $('form .file')[0];
     if (form.files.length === 0) {
       console.log('No file selected!');
